@@ -180,16 +180,43 @@
         .act-sell-coin { background: var(--gold); color: black; }
         .act-sell-cash { background: var(--cash); color: black; box-shadow: 0 0 15px rgba(0,255,136,0.3); }
 
-        /* --- SHOP --- */
+        /* --- SHOP REDESIGN --- */
         .shop-section { margin-bottom: 25px; }
         .shop-title { text-align: left; font-size: 0.8rem; color: #888; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
         
-        .shop-item { display: flex; justify-content: space-between; align-items: center; background: #222; padding: 12px; margin-bottom: 8px; border-radius: 8px; border: 1px solid #333; cursor: pointer; transition: 0.2s; }
+        /* ITEM GRID SYSTEM */
+        .shop-item { 
+            display: grid; 
+            grid-template-columns: 30px 1fr auto; 
+            gap: 10px;
+            align-items: center; 
+            background: #222; 
+            padding: 10px 12px; 
+            margin-bottom: 8px; 
+            border-radius: 8px; 
+            border: 1px solid #333; 
+            cursor: pointer; 
+            transition: 0.2s; 
+        }
         .shop-item:hover { background: #2a2a2a; border-color: var(--gold); }
-        .price-tag { padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
-        .pt-rp { background: #27ae60; color: white; }
-        .pt-coin { background: var(--gold); color: black; }
-        .pt-cash { background: var(--cash); color: black; }
+        .shop-icon { font-size: 1.2rem; text-align: center; }
+        .shop-info { text-align: left; display: flex; flex-direction: column; }
+        .shop-name { font-weight: bold; font-size: 0.9rem; color: #eee; }
+        .shop-desc { font-size: 0.7rem; color: #777; margin-top: 2px; }
+
+        /* BUTTON STYLE PRICE TAG */
+        .price-btn { 
+            padding: 8px 12px; 
+            border-radius: 6px; 
+            font-size: 0.85rem; 
+            font-weight: 800; 
+            min-width: 80px; 
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .pt-rp { background: linear-gradient(to bottom, #2ecc71, #27ae60); color: white; text-shadow: 0 1px 1px rgba(0,0,0,0.3); }
+        .pt-coin { background: linear-gradient(to bottom, #f1c40f, #f39c12); color: black; }
+        .pt-cash { background: linear-gradient(to bottom, #00ff88, #00cc6a); color: black; }
 
         .loader { width: 30px; height: 30px; border: 3px solid #333; border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s infinite linear; margin: 0 auto 15px; }
 
@@ -292,19 +319,58 @@
                 
                 <div class="shop-section">
                     <div class="shop-title">1. ISI SALDO (SIMULASI RUPIAH)</div>
-                    <div class="shop-item" onclick="confirmBuy('saldo', 20000, 20000)"><div>💵 20,000 Saldo</div><div class="price-tag pt-rp">Rp 20k</div></div>
-                    <div class="shop-item" onclick="confirmBuy('saldo', 100000, 100000)"><div>💵 100,000 Saldo</div><div class="price-tag pt-rp">Rp 100k</div></div>
-                    <div class="shop-item" onclick="confirmBuy('saldo', 500000, 500000)"><div>💵 500,000 Saldo</div><div class="price-tag pt-rp">Rp 500k</div></div>
+                    
+                    <div class="shop-item" onclick="confirmBuy('saldo', 20000, 20000)">
+                        <div class="shop-icon">💵</div>
+                        <div class="shop-info"><div class="shop-name">20,000 Saldo</div><div class="shop-desc">Paket Hemat</div></div>
+                        <div class="price-btn pt-rp">Rp 20k</div>
+                    </div>
+
+                    <div class="shop-item" onclick="confirmBuy('saldo', 100000, 100000)">
+                        <div class="shop-icon">💵</div>
+                        <div class="shop-info"><div class="shop-name">100,000 Saldo</div><div class="shop-desc">Paket Reguler</div></div>
+                        <div class="price-btn pt-rp">Rp 100k</div>
+                    </div>
+
+                    <div class="shop-item" onclick="confirmBuy('saldo', 500000, 500000)">
+                        <div class="shop-icon">💵</div>
+                        <div class="shop-info"><div class="shop-name">500,000 Saldo</div><div class="shop-desc">Paket Sultan</div></div>
+                        <div class="price-btn pt-rp">Rp 500k</div>
+                    </div>
+
+                    <div class="shop-item" onclick="confirmBuy('saldo', 1000000, 1000000)">
+                        <div class="shop-icon">💎</div>
+                        <div class="shop-info"><div class="shop-name">1,000,000 Saldo</div><div class="shop-desc">Paket PAUS</div></div>
+                        <div class="price-btn pt-rp">Rp 1 Jt</div>
+                    </div>
                 </div>
 
                 <div class="shop-section">
                     <div class="shop-title">2. TUKAR SALDO KE KOIN</div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 100, 5000)"><div>🪙 100 Koin</div><div class="price-tag pt-cash">5.000 Saldo</div></div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 500, 20000)"><div>🪙 500 Koin</div><div class="price-tag pt-cash">20.000 Saldo</div></div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 1000, 36000)"><div>🪙 1K Koin</div><div class="price-tag pt-cash">36.000 Saldo</div></div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 3000, 100000)"><div>🪙 3K Koin</div><div class="price-tag pt-cash">100.000 Saldo</div></div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 50000, 1600000)"><div>🪙 50K Koin</div><div class="price-tag pt-cash">1.600,000 Saldo</div></div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 1000000, 5000000)"><div>👑 1M Koin</div><div class="price-tag pt-cash">5.000,000 Saldo</div></div>
+                    
+                    <div class="shop-item" onclick="confirmBuy('coins', 100, 5000)">
+                        <div class="shop-icon">🪙</div>
+                        <div class="shop-info"><div class="shop-name">100 Koin</div><div class="shop-desc">Test Keberuntungan</div></div>
+                        <div class="price-btn pt-cash">5rb Saldo</div>
+                    </div>
+
+                    <div class="shop-item" onclick="confirmBuy('coins', 1000, 36000)">
+                        <div class="shop-icon">🪙</div>
+                        <div class="shop-info"><div class="shop-name">1,000 Koin</div><div class="shop-desc">10x Spin</div></div>
+                        <div class="price-btn pt-cash">36rb Saldo</div>
+                    </div>
+
+                    <div class="shop-item" onclick="confirmBuy('coins', 50000, 1600000)">
+                        <div class="shop-icon">💰</div>
+                        <div class="shop-info"><div class="shop-name">50,000 Koin</div><div class="shop-desc">Stok Gacha</div></div>
+                        <div class="price-btn pt-cash">1.6jt Saldo</div>
+                    </div>
+
+                    <div class="shop-item" onclick="confirmBuy('coins', 1000000, 5000000)">
+                        <div class="shop-icon">👑</div>
+                        <div class="shop-info"><div class="shop-name">1 Juta Koin</div><div class="shop-desc">Auto Kaya</div></div>
+                        <div class="price-btn pt-cash">5jt Saldo</div>
+                    </div>
                 </div>
 
                 <hr style="border-color:#333; margin:15px 0;">
