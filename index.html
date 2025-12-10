@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Casino Fixed: Multi-Account & Auto-Price</title>
+    <title>Casino Fixed: UI Shop & Shorthand</title>
     <style>
         :root {
             --bg: #050505;
@@ -188,7 +188,12 @@
         
         .shop-item { display: flex; justify-content: space-between; align-items: center; background: #222; padding: 12px; margin-bottom: 8px; border-radius: 8px; border: 1px solid #333; cursor: pointer; transition: 0.2s; }
         .shop-item:hover { background: #2a2a2a; border-color: var(--gold); }
-        .price-tag { padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        
+        /* FIXED WIDTH PRICE TAGS */
+        .price-tag { 
+            padding: 6px 0; border-radius: 4px; font-size: 0.8rem; font-weight: bold; 
+            width: 85px; text-align: center; flex-shrink: 0;
+        }
         .pt-rp { background: #27ae60; color: white; }
         .pt-coin { background: var(--gold); color: black; }
         .pt-cash { background: var(--cash); color: black; }
@@ -295,21 +300,22 @@
                 
                 <div class="shop-section">
                     <div class="shop-title">1. ISI SALDO (SIMULASI RUPIAH)</div>
-                    <div class="shop-item" onclick="confirmBuy('saldo', 20000, 20000)"><div>💵 20,000 Saldo</div><div class="price-tag pt-rp">Rp 20k</div></div>
-                    <div class="shop-item" onclick="confirmBuy('saldo', 100000, 100000)"><div>💵 100,000 Saldo</div><div class="price-tag pt-rp">Rp 100k</div></div>
-                    <div class="shop-item" onclick="confirmBuy('saldo', 500000, 500000)"><div>💵 500,000 Saldo</div><div class="price-tag pt-rp">Rp 500k</div></div>
-                    <div class="shop-item" onclick="confirmBuy('saldo', 1000000, 1000000)"><div>💵 1,000,000 Saldo</div><div class="price-tag pt-rp">Rp 1jt</div></div>
+                    <div class="shop-item" onclick="confirmBuy('saldo', 20000, 20000)"><div>💵 20K Saldo</div><div class="price-tag pt-rp">Rp 20k</div></div>
+                    <div class="shop-item" onclick="confirmBuy('saldo', 100000, 100000)"><div>💵 100K Saldo</div><div class="price-tag pt-rp">Rp 100k</div></div>
+                    <div class="shop-item" onclick="confirmBuy('saldo', 500000, 500000)"><div>💵 500K Saldo</div><div class="price-tag pt-rp">Rp 500k</div></div>
+                    <div class="shop-item" onclick="confirmBuy('saldo', 1000000, 1000000)"><div>💵 1M Saldo</div><div class="price-tag pt-rp">Rp 1jt</div></div>
                 </div>
 
                 <div class="shop-section">
                     <div class="shop-title">2. TUKAR SALDO KE KOIN (FIXED)</div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 100, 5000)"><div>🪙 100 Koin</div><div class="price-tag pt-cash">5.000 Saldo</div></div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 500, 20000)"><div>🪙 500 Koin</div><div class="price-tag pt-cash">20.000 Saldo</div></div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 1000, 35000)"><div>🪙 1K Koin</div><div class="price-tag pt-cash">35.000 Saldo</div></div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 3000, 100000)"><div>🪙 3K Koin</div><div class="price-tag pt-cash">100.000 Saldo</div></div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 10000, 300000)"><div>🪙 10K Koin</div><div class="price-tag pt-cash">300.000 Saldo</div></div>
+                    <div class="shop-item" onclick="confirmBuy('coins', 100, 5000)"><div>🪙 100 Koin</div><div class="price-tag pt-cash">5K Saldo</div></div>
+                    <div class="shop-item" onclick="confirmBuy('coins', 500, 20000)"><div>🪙 500 Koin</div><div class="price-tag pt-cash">20K Saldo</div></div>
+                    <div class="shop-item" onclick="confirmBuy('coins', 1000, 35000)"><div>🪙 1K Koin</div><div class="price-tag pt-cash">35K Saldo</div></div>
+                    <div class="shop-item" onclick="confirmBuy('coins', 3000, 100000)"><div>🪙 3K Koin</div><div class="price-tag pt-cash">100K Saldo</div></div>
+                    <div class="shop-item" onclick="confirmBuy('coins', 10000, 300000)"><div>🪙 10K Koin</div><div class="price-tag pt-cash">300K Saldo</div></div>
                     <div class="shop-item" onclick="confirmBuy('coins', 50000, 1200000)"><div>🪙 50K Koin</div><div class="price-tag pt-cash">1.2jt Saldo</div></div>
-                    <div class="shop-item" onclick="confirmBuy('coins', 1000000, 20000000)"><div>👑 1M Koin</div><div class="price-tag pt-cash">20jt Saldo</div></div>
+                    
+                    <div class="shop-item" onclick="confirmBuy('coins', 1000000, 18000000)"><div>👑 1M Koin</div><div class="price-tag pt-cash">18jt Saldo</div></div>
                 </div>
 
                 <hr style="border-color:#333; margin:15px 0;">
