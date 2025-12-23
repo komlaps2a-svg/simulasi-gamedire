@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CASINO LEGEND: PERFECT MIX</title>
+    <title>CASINO LEGEND: FINAL FIXED</title>
     <style>
-        /* ===== VARIABLES (VISUAL TETAP) ===== */
+        /* ===== VARIABLES ===== */
         :root {
             --bg: #050505;
             --panel: #111;
@@ -99,7 +99,7 @@
         /* PREVIEW OVERLAY */
         #previewOverlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 600; display: none; flex-direction: column; align-items: center; justify-content: center; }
         #previewCont { transform: scale(1.5); pointer-events: none; }
-        #sellActions { margin-top: 60px; display: flex; gap: 10px; z-index: 601; }
+        #sellActions { margin-top: 60px; display: flex; gap: 10px; z-index: 601; pointer-events: auto; }
 
         /* MODALS */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 500; display: none; align-items: center; justify-content: center; }
@@ -228,19 +228,19 @@
     </div>
 
     <script>
-        // ===== DATABASE (VISUALS MAINTAINED) =====
+        // ===== DATABASE =====
         const ITEMS = [
             { id: 1, name: "TONGKAT PATAH", tier: 0, baseVal: 5, emoji: "🪄", color: "#555", weight: 4000 },
-            { id: 2, name: "ABU KUTUKAN", tier: 0, baseVal: 5, emoji: "🌫️", color: "#555", weight: 4000 },
+            { id: 2, name: "ABU KUTUKAN", tier: 0, baseVal: 5, emoji: "🌬️", color: "#555", weight: 4000 },
             { id: 3, name: "PEDANG BESI", tier: 1, baseVal: 50, emoji: "⚔️", color: "#a0a0a0", weight: 2000 },
             { id: 4, name: "JUBAH BAYANGAN", tier: 1, baseVal: 50, emoji: "🧥", color: "#a0a0a0", weight: 2000 },
             { id: 5, name: "KRISTAL ES", tier: 2, baseVal: 1000, emoji: "❄️", color: "#a5f2f3", weight: 1000 }, 
             { id: 6, name: "TULANG KUNO", tier: 2, baseVal: 1500, emoji: "🩻", color: "#e5e5e5", weight: 1000 },
             { id: 7, name: "TOPI PENYIHIR", tier: 3, baseVal: 3000, emoji: "🧙‍♀️", color: "#d946ef", weight: 300 },
             { id: 8, name: "ORB DARKNESS", tier: 3, baseVal: 4000, emoji: "🔮", color: "#3b82f6", weight: 300 },
-            { id: 9, name: "PHOENIX API", tier: 4, baseVal: 50000, emoji: "🐦‍🔥", color: "#f59e0b", weight: 80 },
-            { id: 10, name: "DRAGON", tier: 5, baseVal: 1000000, emoji: "🐉", color: "#ff003c", weight: 10 },
-            { id: 11, name: "THE JOKER", tier: 6, baseVal: 5000000, emoji: "🃏", color: "#a855f7", weight: 1 }
+            { id: 9, name: "PHOENIX API", tier: 4, baseVal: 0, emoji: "🐦‍🔥", color: "#f59e0b", weight: 80 },
+            { id: 10, name: "DRAGON", tier: 5, baseVal: 0, emoji: "🐉", color: "#ff003c", weight: 10 },
+            { id: 11, name: "THE JOKER", tier: 6, baseVal: 0, emoji: "🃏", color: "#a855f7", weight: 1 }
         ];
 
         let state = { user: "", cash: 0, coins: 1000, items: [] };
@@ -248,18 +248,17 @@
         let actx = null;
         let masterGain = null;
 
-        // ===== PERFECT AUDIO ENGINE =====
         function startGame() {
             document.getElementById('startScreen').style.display = 'none';
             document.getElementById('loginScreen').style.display = 'flex';
             actx = new (window.AudioContext || window.webkitAudioContext)();
             masterGain = actx.createGain();
-            masterGain.gain.value = 1.5; // Balanced Master Volume
+            masterGain.gain.value = 1.0; 
             masterGain.connect(actx.destination);
             startBGM();
         }
 
-        // --- SMOOTH SYNTH ---
+        // ===== BOOSTED AUDIO ENGINE =====
         function playSound(type, param) {
             if(temp.muted || !actx) return;
             if(actx.state==='suspended') actx.resume();
@@ -270,7 +269,7 @@
             o.connect(g); g.connect(masterGain);
 
             if (type === 'spin') {
-                o.type = 'sine'; // Round Bubble Sound
+                o.type = 'sine'; 
                 o.frequency.setValueAtTime(200, t);
                 o.frequency.linearRampToValueAtTime(600, t+0.1); 
                 g.gain.setValueAtTime(0.5, t);
@@ -278,31 +277,37 @@
                 o.start(); o.stop(t+0.1);
             }
             else if (type === 'mut') {
-                // VOLUME DITURUNKAN BIAR GA KASAR
-                if (param === 3) { // DEMON (Smooth Deep)
+                if (param === 3) { // DEMON (Deep Hum)
                     o.type = 'triangle';
-                    o.frequency.setValueAtTime(200, t);
-                    o.frequency.exponentialRampToValueAtTime(40, t+4.0); 
+                    o.frequency.setValueAtTime(250, t);
+                    o.frequency.exponentialRampToValueAtTime(60, t+3.0); 
                     g.gain.setValueAtTime(0, t);
-                    g.gain.linearRampToValueAtTime(3.0, t+0.1); // Reduced Vol
-                    g.gain.exponentialRampToValueAtTime(0.01, t+4.0); 
-                    o.start(); o.stop(t+2.0);
-                } 
-                else if (param === 2) { // GLITCH (Soft Square)
-                    o.type = 'square';
-                    o.frequency.setValueAtTime(300, t);
-                    g.gain.setValueAtTime(0.2, t); // Reduced Vol
-                    g.gain.exponentialRampToValueAtTime(0.01, t+2.0);
-                    o.frequency.linearRampToValueAtTime(100, t+0.1);
-                    o.frequency.linearRampToValueAtTime(100, t+0.2);
+                    g.gain.linearRampToValueAtTime(1.2, t+0.3);
+                    g.gain.exponentialRampToValueAtTime(0.01, t+3.0); 
                     o.start(); o.stop(t+3.0);
                 } 
-                else if (param === 1) { // SHINY (Softest Sine Chime)
+                else if (param === 2) { // GLITCH (BOOSTED SQUARE)
+                    o.type = 'square'; 
+                    o.frequency.setValueAtTime(50, t);
+                    
+                    // Volume NAIK jadi 0.1
+                    g.gain.setValueAtTime(0.05, t); 
+                    g.gain.linearRampToValueAtTime(0.3, t+0.04); 
+                    g.gain.exponentialRampToValueAtTime(0.01, t+0.8);
+                    
+                    // Pitch naik turun cepat
+                    o.frequency.linearRampToValueAtTime(800, t+0.1);
+                    o.frequency.linearRampToValueAtTime(150, t+0.2);
+                    o.frequency.linearRampToValueAtTime(400, t+0.3);
+                    
+                    o.start(); o.stop(t+0.8);
+                } 
+                else if (param === 1) { // SHINY
                     o.type = 'sine';
-                    o.frequency.setValueAtTime(400, t);
-                    g.gain.setValueAtTime(0.4, t); // Reduced Vol
+                    o.frequency.setValueAtTime(600, t);
+                    g.gain.setValueAtTime(0.3, t);
                     g.gain.exponentialRampToValueAtTime(0.01, t+2.0);
-                    o.start(); o.stop(t+3.0);
+                    o.start(); o.stop(t+2.0);
                 }
             } 
             else if (type === 'tier') {
@@ -314,7 +319,7 @@
                     notes.forEach((freq, i) => { setTimeout(() => playChord([freq], 'triangle', 0.5), i * 150); });
                 }
             }
-            else if (type === 'win') { playChord([523.2], 'sine', 0.4); }
+            else if (type === 'win') { playChord([523.2, 659.3], 'sine', 0.4); }
         }
 
         function playChord(freqs, type, dur) {
@@ -322,14 +327,16 @@
             freqs.forEach(f => {
                 const o = actx.createOscillator(); const g = actx.createGain();
                 o.type = type; o.frequency.value = f;
-                g.gain.setValueAtTime(0.2, t);
+                
+                // Volume BOOST (Low tier kedengeran jelas)
+                g.gain.setValueAtTime(0.6, t); 
+                
                 g.gain.exponentialRampToValueAtTime(0.01, t + dur);
                 o.connect(g); g.connect(masterGain);
                 o.start(); o.stop(t + dur);
             });
         }
 
-        // LOUDER MUSIC (0.1 -> 0.4)
         function startBGM() {
             const notes = [261.6, 329.6, 392.0, 523.2, 392.0, 329.6]; 
             let i = 0;
@@ -337,7 +344,7 @@
                 if(!temp.muted && actx && actx.state === 'running') {
                     const o = actx.createOscillator(); const g = actx.createGain();
                     o.type = 'sine'; o.frequency.value = notes[i++ % 6];
-                    g.gain.value = 0.4; // LOUDER MUSIC
+                    g.gain.value = 0.3; 
                     g.gain.exponentialRampToValueAtTime(0.01, actx.currentTime+0.2);
                     o.connect(g); g.connect(masterGain);
                     o.start(); o.stop(actx.currentTime+0.2);
@@ -347,41 +354,42 @@
 
         function toggleMute() { temp.muted = !temp.muted; document.getElementById('btnMusic').style.opacity = temp.muted ? '0.3' : '1'; }
 
-        // ===== 3. PRICE CALC =====
+        // ===== 3. PRICE CALCULATION =====
         function getPrice(item, mut) {
-            if(item.id === 11) {
+            if(item.id === 11) { // JOKER
                 if(mut === 3) return 5000000;
                 if(mut === 2) return 2000000;
                 if(mut === 1) return 1000000;
-                return item.baseVal;
+                return 5000000; 
             }
-            if(item.id === 10) {
+            if(item.id === 10) { // DRAGON
                 if(mut === 3) return 1500000;
                 if(mut === 2) return 500000;
                 if(mut === 1) return 150000;
-                return item.baseVal;
+                return 100000; 
             }
-            if(item.id === 9) {
+            if(item.id === 9) { // PHOENIX
                 if(mut === 3) return 150000;
                 if(mut === 2) return 75000;
                 if(mut === 1) return 30000;
-                return item.baseVal;
+                return 20000; 
             }
-            let bonus = 0;
-            if(mut === 3) bonus = 30;
-            if(mut === 2) bonus = 20;
-            if(mut === 1) bonus = 10;
-            return item.baseVal + bonus;
+
+            let val = item.baseVal;
+            if(mut === 3) val += 100;
+            else if(mut === 2) val += 50;
+            else if(mut === 1) val += 30;
+            return val;
         }
 
-        // ===== 4. LOGIN & SAVE FIX =====
+        function getCurrencyType(tier) { return tier >= 4 ? 'cash' : 'coin'; }
+
+        // ===== 4. LOGIN & SAVE =====
         function doLogin() {
             const u = document.getElementById('username').value.trim();
             if(!u) return alert("ISI USERNAME!");
             state.user = u;
-            
-            // LOAD DARI LOCALSTORAGE
-            const s = localStorage.getItem('casino_legend_v_final_' + u);
+            const s = localStorage.getItem('casino_legend_v_fixed_' + u);
             if(s) {
                 try {
                     const parsed = JSON.parse(s);
@@ -391,28 +399,56 @@
                     alert("DATA LAMA DIMUAT KEMBALI!");
                 } catch(e) { console.log("Error loading"); }
             }
-            
             document.getElementById('loginScreen').style.display='none';
             drawWheel(); renderShop(); updateUI();
         }
         
-        function save() { 
-            if(state.user) localStorage.setItem('casino_legend_v_final_' + state.user, JSON.stringify(state)); 
-        }
+        function save() { if(state.user) localStorage.setItem('casino_legend_v_fixed_' + state.user, JSON.stringify(state)); }
 
-        // ===== 5. WHEEL =====
+        // ===== 5. WHEEL FIX (LAYER SYSTEM) =====
         function drawWheel() {
             const ctx = document.getElementById('wheelCanvas').getContext('2d');
             ctx.clearRect(0,0,680,680);
             const cx=340, cy=340, r=330, arc=(Math.PI*2)/ITEMS.length;
+
+            ctx.lineJoin = 'round'; // Bikin sudut garis gak patah
+
+            // LAYER 1: WARNA (FILL)
             ITEMS.forEach((it, i) => {
                 const a = i*arc;
-                ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,a,a+arc);
-                ctx.fillStyle = i%2===0 ? '#111' : '#1a1a1a'; ctx.fill();
-                if(it.tier>=3) { ctx.lineWidth=3; ctx.strokeStyle=it.color; ctx.stroke(); }
-                ctx.save(); ctx.translate(cx,cy); ctx.rotate(a+arc/2);
-                ctx.textAlign="right"; ctx.font="40px Segoe UI Emoji"; ctx.fillStyle="#fff";
-                ctx.shadowColor=it.color; ctx.shadowBlur=15;
+                ctx.beginPath();
+                ctx.moveTo(cx,cy);
+                ctx.arc(cx,cy,r,a,a+arc);
+                ctx.closePath();
+                ctx.fillStyle = i%2===0 ? '#111' : '#1a1a1a';
+                ctx.fill();
+            });
+
+            // LAYER 2: GARIS (STROKE) - Digambar setelah semua warna beres
+            ITEMS.forEach((it, i) => {
+                const a = i*arc;
+                if(it.tier >= 3) {
+                    ctx.beginPath();
+                    ctx.moveTo(cx,cy);
+                    ctx.arc(cx,cy,r,a,a+arc);
+                    ctx.closePath();
+                    ctx.lineWidth = 4; // Sedikit lebih tebal
+                    ctx.strokeStyle = it.color;
+                    ctx.stroke();
+                }
+            });
+
+            // LAYER 3: EMOJI (TEXT) - Paling atas
+            ITEMS.forEach((it, i) => {
+                const a = i*arc;
+                ctx.save();
+                ctx.translate(cx,cy);
+                ctx.rotate(a+arc/2);
+                ctx.textAlign="right";
+                ctx.font="40px Segoe UI Emoji";
+                ctx.fillStyle="#fff";
+                ctx.shadowColor=it.color;
+                ctx.shadowBlur=15;
                 ctx.fillText(it.emoji, r-40, 15);
                 ctx.restore();
             });
@@ -490,13 +526,15 @@
             else if(item.id===5) { cls+=' t-ice'; } 
             else if(item.id===6) { cls+=' t-bone'; }
 
+            const curType = getCurrencyType(item.tier) === 'cash' ? '💵' : '🪙';
+
             div.className = cls;
             div.style.setProperty('--glow', item.mut > 0 ? color : item.color);
 
             div.innerHTML = `
                 <div class="card-img" style="text-shadow:0 0 20px ${item.color}">${item.emoji}</div>
                 <div class="card-name" style="color:${item.mut > 0 ? '#fff' : item.color}">${item.name}</div>
-                <div style="font-size:0.7rem; color:#aaa; margin-top:5px;">Val: ${item.val.toLocaleString()}</div>
+                <div style="font-size:0.7rem; color:#aaa; margin-top:5px;">${curType} ${item.val.toLocaleString()}</div>
                 ${label ? `<div class="mut-badge" style="background:${color}; color:${item.mut===3?'#fff':'#000'}">${label}</div>` : ''}
             `;
             return div;
@@ -542,10 +580,14 @@
             card.classList.add('active');
             cont.appendChild(card);
             
+            const isCash = getCurrencyType(item.tier) === 'cash';
+            const curIcon = isCash ? '💵' : '🪙';
+
             const btn = document.createElement('button');
             btn.className = 'btn-act';
-            btn.style.cssText = "background:#d00; padding:10px 20px; border:2px solid #fff;";
-            btn.innerHTML = `JUAL (💵 ${item.val.toLocaleString()})`;
+            // GREEN BUTTON
+            btn.style.cssText = "background:#4ade80; color:#000; padding:10px 20px; border:2px solid #fff; font-weight:bold; box-shadow:0 0 15px #4ade80;";
+            btn.innerHTML = `JUAL (${curIcon} ${item.val.toLocaleString()})`;
             btn.onclick = (e) => { e.stopPropagation(); sellSingle(item); };
             actions.appendChild(btn);
 
@@ -557,18 +599,27 @@
 
         function sellSingle(item) {
             state.items = state.items.filter(i => i.uid !== item.uid);
-            state.cash += item.val;
+            
+            const isCash = getCurrencyType(item.tier) === 'cash';
+            if(isCash) {
+                state.cash += item.val;
+            } else {
+                state.coins += item.val;
+            }
+
             updateUI(); save(); 
             playSound('win'); 
             closePreview(); openInv('all');
         }
 
         function sellTrash() {
-            const trash = state.items.filter(i=>i.tier===0 && i.mut===0);
+            const trash = state.items.filter(i => i.tier < 4 && i.mut === 0);
             const val = trash.reduce((a,b)=>a+b.val,0);
-            if(val>0) {
-                state.items = state.items.filter(i=>i.tier>0 || i.mut>0);
-                state.cash+=val; updateUI(); save(); openInv('all');
+            
+            if(val > 0) {
+                state.items = state.items.filter(i => i.tier >= 4 || i.mut > 0);
+                state.coins += val; 
+                updateUI(); save(); openInv('all');
             } else alert("TIDAK ADA SAMPAH");
         }
 
